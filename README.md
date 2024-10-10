@@ -1,3 +1,3 @@
 # Singa Metro Authority Fare Calculator API
 
-### _<todo>_
+###### _Details coming soon..._
