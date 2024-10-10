@@ -18,11 +18,9 @@ public static class FareCalculationExtensions
     public static IEnumerable<TripFare> ApplyDailyCap(this IEnumerable<TripFare> allTripFares, IEnumerable<FareRule> rulesThatMatchFromLine,
         IEnumerable<Line> allLines)
     {
-        var a = allTripFares
+        return allTripFares
             .GroupBy(tripFare => DateOnly.FromDateTime(tripFare.Trip.TripDateTime)) // segregate fares for each date/day
             .SelectMany(group => group.ToList().GetCappedFares(rulesThatMatchFromLine, allLines, rule => rule.DailyCap));
-
-        return a;
     }
     
     public static IEnumerable<TripFare> ApplyWeeklyCap(this IEnumerable<TripFare> allFaresByTrip, IEnumerable<FareRule> rulesThatMatchFromLine,
