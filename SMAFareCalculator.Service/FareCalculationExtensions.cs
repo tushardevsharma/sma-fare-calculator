@@ -38,11 +38,11 @@ public static class FareCalculationExtensions
         IEnumerable<FareRule> rulesThatMatchFromLine, IEnumerable<Line> allLines, Func<FareRule, decimal> fareCapAction)
     {
         return tripFares
-            .GroupBy(tripFare => (tripFare.Trip.FromLine, tripFare.Trip.ToLine))
-            .Select(group => group.ToList().GetLinePairCappedFare(rulesThatMatchFromLine, allLines, fareCapAction));
+            .GroupBy(tripFare => (tripFare.Trip.FromLine, tripFare.Trip.ToLine)) // segregate based on specific [fromLine, toLine] pairs
+            .Select(group => group.ToList().GetCappedFarePerLinePair(rulesThatMatchFromLine, allLines, fareCapAction));
     }
 
-    private static TripFare GetLinePairCappedFare(
+    private static TripFare GetCappedFarePerLinePair(
         this IEnumerable<TripFare> tripFares,
         IEnumerable<FareRule> rulesThatMatchFromLine, IEnumerable<Line> allLines,
         Func<FareRule, decimal> fareCapAction)
@@ -50,18 +50,19 @@ public static class FareCalculationExtensions
         return tripFares
             .Aggregate<TripFare, TripFare>(null!,
                 (tripFareSoFar, tripFare) =>
-                    DailyFareAccumulator(tripFareSoFar, tripFare, rulesThatMatchFromLine, allLines, fareCapAction));
+                    AccumulateFares(tripFareSoFar, tripFare, rulesThatMatchFromLine, allLines, fareCapAction));
     }
 
-    private static TripFare DailyFareAccumulator(TripFare? aggregateFareByTrip, TripFare tripFare, IEnumerable<FareRule> rulesThatMatchFromLine,
+    private static TripFare AccumulateFares(TripFare? aggregateFareByTrip, TripFare newTripFare,
+        IEnumerable<FareRule> rulesThatMatchFromLine,
         IEnumerable<Line> allLines, Func<FareRule, decimal> fareCapAction)
     {
-        aggregateFareByTrip ??= tripFare with { FareValue = 0 };
+        aggregateFareByTrip ??= newTripFare with { FareValue = 0 };
         
-        var matchingRule = GetFareRules(tripFare.Trip.FromLine, tripFare.Trip.ToLine, rulesThatMatchFromLine, allLines);
+        var matchingRule = GetFareRules(newTripFare.Trip.FromLine, newTripFare.Trip.ToLine, rulesThatMatchFromLine, allLines);
         var newAggregateFareByTrip = aggregateFareByTrip with
         {
-            FareValue = Math.Min(fareCapAction(matchingRule), aggregateFareByTrip.FareValue + tripFare.FareValue)
+            FareValue = Math.Min(fareCapAction(matchingRule), aggregateFareByTrip.FareValue + newTripFare.FareValue)
         };
         
         return newAggregateFareByTrip;
