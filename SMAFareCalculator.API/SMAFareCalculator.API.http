@@ -1,0 +1,10 @@
+POST http://localhost:5149/sma/total-fare
+accept: */*
+Content-Type: application/json
+
+{
+  "trips": "Green,Green, 2021-03-24T07:58:30;Green, Red, 2021-03-24T09:58:30;Red, Red, 2021-03-25T11:58:30"
+}
+
+###
+

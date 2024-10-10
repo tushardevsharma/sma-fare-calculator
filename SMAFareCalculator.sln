@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAFareCalculator.Domain", "SMAFareCalculator.Domain\SMAFareCalculator.Domain.csproj", "{5C124D30-5BCD-45D9-BF18-D751E1D22802}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAFareCalculator.Service", "SMAFareCalculator.Service\SMAFareCalculator.Service.csproj", "{121D2926-6B8B-4DD4-9FBB-CAD9F2DD0D84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAFareCalculator.Dto", "SMAFareCalculator.Dto\SMAFareCalculator.Dto.csproj", "{9437251B-F600-4180-BCCB-D88227454B6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAFareCalculator.Repository", "SMAFareCalculator.Repository\SMAFareCalculator.Repository.csproj", "{67DF203D-B965-4FA9-909F-E4D87C5ACF88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAFareCalculator.Common", "SMAFareCalculator.Common\SMAFareCalculator.Common.csproj", "{E5ECBA68-0E23-48B2-9E7E-D175797DABE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAFareCalculator.API", "SMAFareCalculator.API\SMAFareCalculator.API.csproj", "{9E160A78-7FE9-4157-BABF-597ACB7D7F4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAFareCalculator.Tests", "SMAFareCalculator.Tests\SMAFareCalculator.Tests.csproj", "{6D2063AF-0DC2-4C6A-8A3C-3FE2566A1BAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C124D30-5BCD-45D9-BF18-D751E1D22802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C124D30-5BCD-45D9-BF18-D751E1D22802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C124D30-5BCD-45D9-BF18-D751E1D22802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C124D30-5BCD-45D9-BF18-D751E1D22802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{121D2926-6B8B-4DD4-9FBB-CAD9F2DD0D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{121D2926-6B8B-4DD4-9FBB-CAD9F2DD0D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{121D2926-6B8B-4DD4-9FBB-CAD9F2DD0D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{121D2926-6B8B-4DD4-9FBB-CAD9F2DD0D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9437251B-F600-4180-BCCB-D88227454B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9437251B-F600-4180-BCCB-D88227454B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9437251B-F600-4180-BCCB-D88227454B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9437251B-F600-4180-BCCB-D88227454B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67DF203D-B965-4FA9-909F-E4D87C5ACF88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67DF203D-B965-4FA9-909F-E4D87C5ACF88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67DF203D-B965-4FA9-909F-E4D87C5ACF88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67DF203D-B965-4FA9-909F-E4D87C5ACF88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5ECBA68-0E23-48B2-9E7E-D175797DABE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5ECBA68-0E23-48B2-9E7E-D175797DABE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5ECBA68-0E23-48B2-9E7E-D175797DABE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5ECBA68-0E23-48B2-9E7E-D175797DABE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E160A78-7FE9-4157-BABF-597ACB7D7F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E160A78-7FE9-4157-BABF-597ACB7D7F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E160A78-7FE9-4157-BABF-597ACB7D7F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E160A78-7FE9-4157-BABF-597ACB7D7F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D2063AF-0DC2-4C6A-8A3C-3FE2566A1BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D2063AF-0DC2-4C6A-8A3C-3FE2566A1BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D2063AF-0DC2-4C6A-8A3C-3FE2566A1BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D2063AF-0DC2-4C6A-8A3C-3FE2566A1BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

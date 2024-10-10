@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>preview</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SMAFareCalculator.Domain\SMAFareCalculator.Domain.csproj" />
+      <ProjectReference Include="..\SMAFareCalculator.Dto\SMAFareCalculator.Dto.csproj" />
+      <ProjectReference Include="..\SMAFareCalculator.Repository\SMAFareCalculator.Repository.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-rc.2.24473.5" />
+    </ItemGroup>
+
+</Project>
