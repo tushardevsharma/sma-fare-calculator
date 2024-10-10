@@ -61,5 +61,5 @@ jobs:
         with:
           app-name: 'smafarecalculator'
           slot-name: 'Production'
-          package: .
+          package: 'SMAFareCalculator.API'
           
