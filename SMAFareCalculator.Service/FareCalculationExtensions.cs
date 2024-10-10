@@ -8,7 +8,7 @@ public static class FareCalculationExtensions
     public static TripFare CalculateFare(this Trip trip, IEnumerable<FareRule> allRules, IEnumerable<Line> allLines,
         IEnumerable<PeakHour> peakHours)
     {
-        var rules = GetFareRules(trip.FromLine, trip.ToLine, allRules, allLines);
+        var rules = GetFareRules(trip, allRules, allLines);
 
         return IsTripInPeakHour(trip.TripDateTime, peakHours)
             ? new TripFare(trip, rules.PeakFare)
@@ -57,7 +57,7 @@ public static class FareCalculationExtensions
     {
         aggregateFareByTrip ??= newTripFare with { FareValue = 0 };
         
-        var matchingRule = GetFareRules(newTripFare.Trip.FromLine, newTripFare.Trip.ToLine, rulesThatMatchFromLine, allLines);
+        var matchingRule = GetFareRules(newTripFare.Trip, rulesThatMatchFromLine, allLines);
         var newAggregateFareByTrip = aggregateFareByTrip with
         {
             FareValue = Math.Min(fareCapAction(matchingRule), aggregateFareByTrip.FareValue + newTripFare.FareValue)
@@ -66,19 +66,25 @@ public static class FareCalculationExtensions
         return newAggregateFareByTrip;
     }
     
-    private static FareRule GetFareRules(string fromLine, string toLine, IEnumerable<FareRule> allRules, IEnumerable<Line> allLines)
+    private static FareRule GetFareRules(Trip trip, IEnumerable<FareRule> allRules, IEnumerable<Line> allLines)
     {
-        var fareRules = allRules.Where(rule =>
-            rule.Ref_FromLine == GetLineId(fromLine, allLines) && rule.Ref_ToLine == GetLineId(toLine, allLines));
+        var fareRules = allRules.Where(rule => rule.TripMatchesRule(trip, allLines));
         return fareRules.First();
     }
 
     private static int GetLineId(string targetLineName, IEnumerable<Line> allLines)
-        => allLines.Where(line => line.Name.Equals(targetLineName.Trim(), StringComparison.OrdinalIgnoreCase)).Select(line => line.Id).First();
+        => allLines
+            .Where(line => line.Name.Equals(targetLineName.Trim(), StringComparison.OrdinalIgnoreCase))
+            .Select(line => line.Id).First();
 
     private static bool IsTripInPeakHour(DateTime tripDateTime, IEnumerable<PeakHour> peakHours)
         => peakHours.Any(peakHour =>
             peakHour.DayOfWeek == tripDateTime.DayOfWeek && 
             TimeOnly.FromDateTime(tripDateTime) >= peakHour.FromTime &&
             TimeOnly.FromDateTime(tripDateTime) <= peakHour.ToTime);
+
+    // In the future filter based on more parameters like from/to stations, age-range, gender, etc.
+    private static bool TripMatchesRule(this FareRule rule, Trip trip, IEnumerable<Line> allLines)
+        => rule.Ref_FromLine == GetLineId(trip.FromLine, allLines) && 
+           rule.Ref_ToLine == GetLineId(trip.ToLine, allLines);
 }

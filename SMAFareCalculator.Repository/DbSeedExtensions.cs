@@ -3,7 +3,7 @@ using SMAFareCalculator.Repository.Interface;
 
 namespace SMAFareCalculator.Repository;
 
-public static class InitializeDbExtensions
+public static class DbSeedExtensions
 {
     public static async Task InitDb(this IRepository repo)
     {
