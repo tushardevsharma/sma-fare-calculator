@@ -26,8 +26,8 @@ public class FareService(IRepository _repo) : IFareService
         IEnumerable<Line> allLines,
         IEnumerable<PeakHour> allPeakHours)
     {
-        var allFaresByTrip = trips.Select(trip => trip.CalculateFare(rulesThatMatchFromLine, allLines, allPeakHours));
-        return allFaresByTrip
+        var allTripFares = trips.Select(trip => trip.CalculateFare(rulesThatMatchFromLine, allLines, allPeakHours));
+        return allTripFares
             .ApplyDailyCap(rulesThatMatchFromLine, allLines)
             .ApplyWeeklyCap(rulesThatMatchFromLine, allLines)
             .Sum(fareByTrip => fareByTrip.FareValue);

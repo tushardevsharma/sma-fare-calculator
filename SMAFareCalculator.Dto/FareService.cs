@@ -9,4 +9,4 @@ public record CalculateTotalFareResponse(decimal TotalFare)
 {
     [JsonIgnore] public int ResponseCode { get; init; }
 }
-public record FareByTrip(decimal FareValue, Trip Trip);
+public record TripFare(Trip Trip, decimal FareValue);
