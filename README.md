@@ -48,3 +48,6 @@ is introduced, a key bottleneck will be retrieving a rider’s trip history, as 
 Therefore, choosing the right database to store trip histories is crucial. A NoSQL database seems like a good fit for handling
 all riders' trip histories, but we’ll need to account for eventual consistency. That said, given our use case, this shouldn't be
 an issue—most NoSQL systems reach consistency far quicker than the interval between a rider's consecutive trips.
+
+## Tests
+The API functionality is covered by [these automated tests](https://github.com/tushardevsharma/sma-fare-calculator/blob/3f6199dd4f568c25d26346f9770768929e473a69/src/SMAFareCalculator.Tests/FareCalculatorTripsTestDataExtn.cs#L3).
