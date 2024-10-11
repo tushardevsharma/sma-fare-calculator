@@ -22,4 +22,29 @@ Outputs the total fare -
   "totalFare": 7
 }
 ```
+## Design
 
+### ER Diagram
+
+![er-diagram.jpg](resources/er-diagram.jpg)
+
+The design is flexible enough to accomodate new metro lines with
+zero downtime and without an app deployment as the fare rules are being dynamically 
+[fetched from the database](https://github.com/tushardevsharma/sma-fare-calculator/blob/3f6199dd4f568c25d26346f9770768929e473a69/src/SMAFareCalculator.Service/FareService.cs#L16).
+The core fare calculation algorithm is written in a generic so that it can accomodate new metro lines,
+new daily/weekly fare caps and even new parameters that can affect the fare in the future can be accommodated
+[fairly easily](https://github.com/tushardevsharma/sma-fare-calculator/blob/3f6199dd4f568c25d26346f9770768929e473a69/src/SMAFareCalculator.Service/FareCalculationExtensions.cs#L86-L89).
+
+## Future Work
+
+- Currently, the system does not offer any form of persistence, meaning there’s no way to track a rider's trip history.
+This is important because daily and weekly fare caps directly affect how much a rider needs to pay. A natural next step would be
+to introduce a "ride history" feature, allowing the system to calculate fares based on both current inputs and the rider's past
+trips. This change will also require implementing a unique rider identification system, meaning we’ll need to introduce
+registration and login functionality.
+
+- At present, the system scales infinitely since it operates entirely in-memory without a database. However, once persistence
+is introduced, a key bottleneck will be retrieving a rider’s trip history, as every fare calculation will depend on this data.
+Therefore, choosing the right database to store trip histories is crucial. A NoSQL database seems like a good fit for handling
+all riders' trip histories, but we’ll need to account for eventual consistency. That said, given our use case, this shouldn't be
+an issue—most NoSQL systems reach consistency far quicker than the interval between a rider's consecutive trips.
