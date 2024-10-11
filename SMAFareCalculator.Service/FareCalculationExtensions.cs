@@ -15,32 +15,32 @@ public static class FareCalculationExtensions
             : new TripFare(trip, rules.NonPeakFare);
     }
 
-    public static IEnumerable<TripFare> ApplyDailyCap(this IEnumerable<TripFare> allTripFares, IEnumerable<FareRule> rulesThatMatchFromLine,
+    public static IEnumerable<TripFare> AggregateFareWithDailyCap(this IEnumerable<TripFare> allTripFares, IEnumerable<FareRule> rulesThatMatchFromLine,
         IEnumerable<Line> allLines)
     {
         return allTripFares
             .GroupBy(tripFare => DateOnly.FromDateTime(tripFare.Trip.TripDateTime)) // segregate fares for each date/day
-            .SelectMany(group => group.ToList().GetCappedFares(rulesThatMatchFromLine, allLines, rule => rule.DailyCap));
+            .SelectMany(group => group.ToList().GetAggregateFare(rulesThatMatchFromLine, allLines, rule => rule.DailyCap));
     }
     
-    public static IEnumerable<TripFare> ApplyWeeklyCap(this IEnumerable<TripFare> allFaresByTrip, IEnumerable<FareRule> rulesThatMatchFromLine,
+    public static IEnumerable<TripFare> AggregateFareWithWeeklyCap(this IEnumerable<TripFare> allFaresByTrip, IEnumerable<FareRule> rulesThatMatchFromLine,
         IEnumerable<Line> allLines)
     {
         var startDate = allFaresByTrip.Select(fareByTrip => fareByTrip.Trip.TripDateTime).Order().First();
         return allFaresByTrip
             .GroupBy(fareByDate => (fareByDate.Trip.TripDateTime - startDate).Days / 7) // create "rolling weeks" from the first trip date 
-            .SelectMany(group => group.ToList().GetCappedFares(rulesThatMatchFromLine, allLines, rule => rule.WeeklyCap));
+            .SelectMany(group => group.ToList().GetAggregateFare(rulesThatMatchFromLine, allLines, rule => rule.WeeklyCap));
     }
 
-    private static IEnumerable<TripFare> GetCappedFares(this IEnumerable<TripFare> tripFares,
+    private static IEnumerable<TripFare> GetAggregateFare(this IEnumerable<TripFare> tripFares,
         IEnumerable<FareRule> rulesThatMatchFromLine, IEnumerable<Line> allLines, Func<FareRule, decimal> fareCapAction)
     {
         return tripFares
             .GroupBy(tripFare => (tripFare.Trip.FromLine, tripFare.Trip.ToLine)) // segregate based on specific [fromLine, toLine] pairs
-            .Select(group => group.ToList().GetCappedFarePerLinePair(rulesThatMatchFromLine, allLines, fareCapAction));
+            .Select(group => group.ToList().GetAggregateFarePerLinePair(rulesThatMatchFromLine, allLines, fareCapAction));
     }
 
-    private static TripFare GetCappedFarePerLinePair(
+    private static TripFare GetAggregateFarePerLinePair(
         this IEnumerable<TripFare> tripFares,
         IEnumerable<FareRule> rulesThatMatchFromLine, IEnumerable<Line> allLines,
         Func<FareRule, decimal> fareCapAction)
@@ -48,10 +48,10 @@ public static class FareCalculationExtensions
         return tripFares
             .Aggregate<TripFare, TripFare>(null!,
                 (tripFareSoFar, tripFare) =>
-                    AccumulateFares(tripFareSoFar, tripFare, rulesThatMatchFromLine, allLines, fareCapAction));
+                    AggregateFares(tripFareSoFar, tripFare, rulesThatMatchFromLine, allLines, fareCapAction));
     }
 
-    private static TripFare AccumulateFares(TripFare? aggregateFareByTrip, TripFare newTripFare,
+    private static TripFare AggregateFares(TripFare? aggregateFareByTrip, TripFare newTripFare,
         IEnumerable<FareRule> rulesThatMatchFromLine,
         IEnumerable<Line> allLines, Func<FareRule, decimal> fareCapAction)
     {

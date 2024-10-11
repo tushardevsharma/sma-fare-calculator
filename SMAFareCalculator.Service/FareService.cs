@@ -28,8 +28,8 @@ public class FareService(IRepository _repo) : IFareService
     {
         var allTripFares = trips.Select(trip => trip.CalculateFare(rulesThatMatchFromLine, allLines, allPeakHours));
         return allTripFares
-            .ApplyDailyCap(rulesThatMatchFromLine, allLines)
-            .ApplyWeeklyCap(rulesThatMatchFromLine, allLines)
+            .AggregateFareWithDailyCap(rulesThatMatchFromLine, allLines)
+            .AggregateFareWithWeeklyCap(rulesThatMatchFromLine, allLines)
             .Sum(fareByTrip => fareByTrip.FareValue);
     }
 
