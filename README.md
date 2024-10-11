@@ -28,12 +28,11 @@ Outputs the total fare -
 
 ![er-diagram.jpg](resources/er-diagram.jpg)
 
-The design is flexible enough to accomodate new metro lines with
-zero downtime and without an app deployment as the fare rules are being dynamically 
-[fetched from the database](https://github.com/tushardevsharma/sma-fare-calculator/blob/3f6199dd4f568c25d26346f9770768929e473a69/src/SMAFareCalculator.Service/FareService.cs#L16).
-The core fare calculation algorithm is written in a generic so that it can accomodate new metro lines,
-new daily/weekly fare caps and even new parameters that can affect the fare in the future can be accommodated
-[fairly easily](https://github.com/tushardevsharma/sma-fare-calculator/blob/3f6199dd4f568c25d26346f9770768929e473a69/src/SMAFareCalculator.Service/FareCalculationExtensions.cs#L86-L89).
+The design is flexible enough to accommodate new metro lines without any downtime or the need for app deployment, 
+as fare rules are dynamically [fetched from the (in-memory) database](https://github.com/tushardevsharma/sma-fare-calculator/blob/3f6199dd4f568c25d26346f9770768929e473a69/src/SMAFareCalculator.Service/FareService.cs#L16). 
+The core fare calculation algorithm is built in a [generic fashion](https://github.com/tushardevsharma/sma-fare-calculator/blob/3f6199dd4f568c25d26346f9770768929e473a69/src/SMAFareCalculator.Service/FareCalculationExtensions.cs#L86-L89),
+allowing it to easily incorporate new metro lines, daily/weekly fare caps, and any additional parameters
+that may influence fares in the future
 
 ## Future Work
 
